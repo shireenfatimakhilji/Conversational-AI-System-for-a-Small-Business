@@ -6,14 +6,14 @@ A conversational AI chatbot for taking custom crochet orders using Ollama LLM wi
 
 - Python 3.10+
 - Node.js 16+
-- Ollama with llama3.2:3b model
+- Ollama with qwen2.5:1.5b model
 
 ## Quick Start
 
 ### 1. Install Ollama Model
 
 ```bash
-ollama pull llama3.2:3b
+ollama pull qwen2.5:1.5b
 ```
 
 ### 2. Backend Setup
