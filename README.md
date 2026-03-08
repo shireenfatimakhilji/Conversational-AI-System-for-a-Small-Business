@@ -159,7 +159,6 @@ Edit `config.py` to customize:
 
 ---
 
-**Developed by**: Bilal  
 **Date**: March 2026  
 **Tech Stack**: Python, FastAPI, Ollama, Next.js, React
 
