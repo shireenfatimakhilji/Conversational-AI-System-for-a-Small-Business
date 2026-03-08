@@ -154,8 +154,6 @@ Edit `config.py` to customize:
 
 - Requires Ollama to be running locally
 - Frontend proxies API calls to backend (configured in next.config.js)
-- Session data is stored in-memory (cleared on restart)
-- All prices are in Pakistani Rupees (PKR)
 
 ---
 
