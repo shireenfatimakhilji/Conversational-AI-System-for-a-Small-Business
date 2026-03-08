@@ -1,0 +1,19 @@
+# Additional Requirements for Testing & Reliability Features
+# Add these to your existing requirements.txt or install separately
+
+# ── Core Dependencies (if not already installed) ──────────────────────────────
+requests>=2.31.0
+websockets>=12.0
+
+# ── For System Monitoring (optional but recommended) ──────────────────────────
+psutil>=5.9.0  # System resource monitoring in stress tests
+
+# ── For Enhanced Async Features (optional) ────────────────────────────────────
+aiohttp>=3.9.0  # If you want to use async HTTP clients
+
+# ── Installation Commands ─────────────────────────────────────────────────────
+# Install all at once:
+#   pip install requests websockets psutil
+#
+# Or install from this file:
+#   pip install -r requirements_testing.txt
