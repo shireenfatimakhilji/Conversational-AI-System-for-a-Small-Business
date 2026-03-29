@@ -1,13 +1,29 @@
 # api.py
 import asyncio
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+import tempfile
+import os
+import io
+import re
+import wave
+import subprocess
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.responses import StreamingResponse
 from sessions import store
+
+import whisper as _whisper
+
+# ── Load models at startup ────────────────────────────────────────────────────
+
+print("Loading Whisper ASR model...")
+_asr_model = _whisper.load_model("base")
+print("Whisper loaded!")
+
+# ── App setup ─────────────────────────────────────────────────────────────────
 
 app = FastAPI(title="Crochetzies Chatbot API")
 
-# Allow browser frontends to connect (Phase 5 will need this)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,28 +31,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── REST Endpoints ────────────────────────────────────────────────────────────
+# ── Session Endpoints ─────────────────────────────────────────────────────────
 
 @app.post("/session/new")
 def new_session():
-    """
-    Creates a new chat session.
-    Returns a session_id that the client must include in all future requests.
-    """
-    session_id = store.create()
-    manager = store.get(session_id)
-
-    # Send the greeting message
-    greeting = manager.get_response("hello")
-    return {
-        "session_id": session_id,
-        "greeting": greeting
-    }
+    try:
+        session_id = store.create()
+        manager = store.get(session_id)
+        greeting = manager.get_response("hello")
+        return {"session_id": session_id, "greeting": greeting}
+    except ValueError as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
 
 @app.get("/session/{session_id}/stats")
 def session_stats(session_id: str):
-    """Returns stats for a session (turns, memory, etc.)"""
     manager = store.get(session_id)
     if not manager:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -45,26 +54,80 @@ def session_stats(session_id: str):
 
 @app.delete("/session/{session_id}")
 def end_session(session_id: str):
-    """Manually ends and deletes a session."""
     if not store.get(session_id):
         raise HTTPException(status_code=404, detail="Session not found")
     store.delete(session_id)
     return {"message": "Session ended"}
 
 
+# ── ASR Endpoint ──────────────────────────────────────────────────────────────
+
+@app.post("/asr/transcribe")
+async def transcribe_audio(audio: UploadFile = File(...)):
+    """Receives browser mic audio, returns transcribed text via local Whisper."""
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmp:
+        contents = await audio.read()
+        tmp.write(contents)
+        tmp_path = tmp.name
+    try:
+        result = _asr_model.transcribe(tmp_path)
+        return {"text": result["text"].strip()}
+    finally:
+        os.unlink(tmp_path)
+
+
+# ── TTS Endpoint ──────────────────────────────────────────────────────────────
+
+@app.post("/tts/speak")
+async def speak_text(payload: dict):
+    """Converts text to speech using Windows SAPI via pyttsx3, returns WAV."""
+    text = payload.get("text", "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="No text provided")
+
+    # Clean text
+    text = re.sub(r"[*_`#|]", "", text)
+    text = re.sub(r"ORDER-COMPLETE", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"Rs\.", "Rupees", text)
+    text = text.strip()
+
+    if not text:
+        raise HTTPException(status_code=400, detail="Text empty after cleaning.")
+
+    loop = asyncio.get_event_loop()
+
+    def generate_audio():
+        import pyttsx3
+        engine = pyttsx3.init()
+        engine.setProperty("rate", 175)   # speed
+        engine.setProperty("volume", 1.0) # volume
+
+        # Save to temp WAV file
+        tmp_path = tempfile.mktemp(suffix=".wav")
+        engine.save_to_file(text, tmp_path)
+        engine.runAndWait()
+        engine.stop()
+
+        # Read back
+        with open(tmp_path, "rb") as f:
+            audio_data = f.read()
+        os.unlink(tmp_path)
+
+        return io.BytesIO(audio_data)
+
+    audio_buffer = await loop.run_in_executor(None, generate_audio)
+
+    return StreamingResponse(
+        audio_buffer,
+        media_type="audio/wav",
+        headers={"Cache-Control": "no-cache"}
+    )
+
+
 # ── WebSocket Endpoint ────────────────────────────────────────────────────────
 
 @app.websocket("/ws/chat/{session_id}")
 async def websocket_chat(websocket: WebSocket, session_id: str):
-    """
-    Main chat endpoint. Streams bot tokens back as they are generated.
-
-    Client sends:  {"message": "I want a cat"}
-    Server sends:  {"type": "token",  "data": "Sure"}   (one per token)
-                   {"type": "token",  "data": "!"}
-                   {"type": "done",   "data": ""}        (signals end of reply)
-                   {"type": "error",  "data": "..."}     (if something goes wrong)
-    """
     await websocket.accept()
 
     manager = store.get(session_id)
@@ -75,7 +138,6 @@ async def websocket_chat(websocket: WebSocket, session_id: str):
 
     try:
         while True:
-            # Wait for the user's message
             data = await websocket.receive_json()
             user_message = data.get("message", "").strip()
 
@@ -83,12 +145,13 @@ async def websocket_chat(websocket: WebSocket, session_id: str):
                 await websocket.send_json({"type": "error", "data": "Empty message"})
                 continue
 
-            # Stream the response token by token
             await stream_response(websocket, manager, user_message)
 
-            # If order is confirmed, close the connection cleanly
             if manager.session_ended:
-                await websocket.send_json({"type": "session_end", "data": "Order confirmed. Session closed."})
+                await websocket.send_json({
+                    "type": "session_end",
+                    "data": "Order confirmed. Session closed."
+                })
                 await websocket.close()
                 store.delete(session_id)
                 break
@@ -98,20 +161,13 @@ async def websocket_chat(websocket: WebSocket, session_id: str):
 
 
 async def stream_response(websocket: WebSocket, manager, user_message: str):
-    """
-    Calls the ConversationManager in a thread (since Ollama is blocking/sync),
-    streams each token back over the WebSocket as it arrives.
-    """
     import ollama
     from config import MODEL_NAME
 
-    # Build the message list without running inference yet
     manager._add_turn("user", user_message)
     manager._manage_memory()
 
     full_reply = ""
-
-    # Run Ollama streaming in a thread so it doesn't block the async event loop
     loop = asyncio.get_event_loop()
 
     def run_stream():
@@ -126,18 +182,14 @@ async def stream_response(websocket: WebSocket, manager, user_message: str):
     for chunk in response_stream:
         token = chunk["message"]["content"]
         full_reply += token
-        # Send each token immediately to the client
         await websocket.send_json({"type": "token", "data": token})
-        await asyncio.sleep(0)  # yield control so other connections stay responsive
+        await asyncio.sleep(0)
 
-    # Signal end of this response
     await websocket.send_json({"type": "done", "data": ""})
 
-    # Record the completed reply in history
     manager._add_turn("assistant", full_reply)
     manager._turn_count += 1
 
-    # Check for order completion signal
     if "order-complete" in full_reply.lower():
         manager.session_ended = True
         manager._save_history()
