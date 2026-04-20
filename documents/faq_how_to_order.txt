@@ -1,0 +1,15 @@
+FAQ: How do I place an order?
+==============================
+You can place an order through:
+  1. Our chatbot — it will guide you step by step through the order process
+  2. WhatsApp — message us at +92-300-0000000
+  3. Email — crochetzies@gmail.com
+
+When placing an order, you will need to provide:
+  - The item you want
+  - Colors
+  - Size (Small, Medium, or Large)
+  - Any extras
+  - Quantity
+  - Your full name
+  - Your delivery address

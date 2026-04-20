@@ -1,0 +1,204 @@
+{
+  "info": {
+    "name": "Crochetzies Chatbot API",
+    "_postman_id": "crochetzies-api-collection",
+    "description": "API collection for Crochetzies conversational order-taking chatbot. Test all REST and WebSocket endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "ws_url",
+      "value": "ws://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "description": "Auto-filled when you run Create Session",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/docs",
+          "host": ["{{base_url}}"],
+          "path": ["docs"]
+        },
+        "description": "Verify the API server is running. Should return the Swagger UI page."
+      },
+      "response": []
+    },
+    {
+      "name": "2 - Create Session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var json = pm.response.json();",
+              "pm.collectionVariables.set('session_id', json.session_id);",
+              "console.log('Session ID saved:', json.session_id);",
+              "",
+              "pm.test('Status is 200', function() {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Has session_id', function() {",
+              "    pm.expect(json.session_id).to.be.a('string');",
+              "});",
+              "pm.test('Has greeting', function() {",
+              "    pm.expect(json.greeting).to.be.a('string');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/session/new",
+          "host": ["{{base_url}}"],
+          "path": ["session", "new"]
+        },
+        "description": "Creates a new chat session. Automatically saves session_id to collection variable for use in subsequent requests."
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"session_id\": \"45177432-e691-4c7d-9dbe-af6116265bfe\",\n  \"greeting\": \"Hello! Welcome to Crochetzies. What kind of item would you like?\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "3 - Get Session Stats",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function() {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "var json = pm.response.json();",
+              "pm.test('Has total_turns', function() {",
+              "    pm.expect(json.total_turns).to.be.a('number');",
+              "});",
+              "pm.test('Has session_ended flag', function() {",
+              "    pm.expect(json.session_ended).to.be.a('boolean');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/session/{{session_id}}/stats",
+          "host": ["{{base_url}}"],
+          "path": ["session", "{{session_id}}", "stats"]
+        },
+        "description": "Returns stats for the current session: turn count, history window size, whether a summary exists, and whether the session has ended."
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"total_turns\": 3,\n  \"history_window\": 6,\n  \"has_summary\": false,\n  \"session_ended\": false\n}"
+        },
+        {
+          "name": "Session Not Found",
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"detail\": \"Session not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "4 - Delete Session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function() {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Session ended message', function() {",
+              "    var json = pm.response.json();",
+              "    pm.expect(json.message).to.equal('Session ended');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/session/{{session_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["session", "{{session_id}}"]
+        },
+        "description": "Manually ends and deletes a session. Call this when the user closes the chat window."
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"message\": \"Session ended\"\n}"
+        },
+        {
+          "name": "Session Not Found",
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"detail\": \"Session not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "5 - WebSocket Chat",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{ws_url}}/ws/chat/{{session_id}}",
+          "host": ["{{ws_url}}"],
+          "path": ["ws", "chat", "{{session_id}}"]
+        },
+        "description": "WebSocket endpoint for real-time streaming chat.\n\nHow to use in Postman:\n1. Run '2 - Create Session' first to get a session_id\n2. Change request type to WebSocket\n3. Connect to ws://localhost:8000/ws/chat/{{session_id}}\n4. Send messages as JSON: {\"message\": \"I want a cat\"}\n\nServer response types:\n- {\"type\": \"token\",       \"data\": \"Sure\"}   — one token at a time (streaming)\n- {\"type\": \"done\",        \"data\": \"\"}        — end of this reply\n- {\"type\": \"session_end\", \"data\": \"...\"}    — order confirmed, session closing\n- {\"type\": \"error\",       \"data\": \"...\"}    — something went wrong\n\nExample conversation flow:\n  Send: {\"message\": \"I want a cat\"}\n  Send: {\"message\": \"white\"}\n  Send: {\"message\": \"small\"}\n  Send: {\"message\": \"none\"}\n  Send: {\"message\": \"1\"}\n  Send: {\"message\": \"no more items\"}\n  Send: {\"message\": \"Ayesha Khan\"}\n  Send: {\"message\": \"House 5, Street 3, Lahore\"}\n  Send: {\"message\": \"yes\"}"
+      },
+      "response": []
+    }
+  ]
+}

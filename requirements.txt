@@ -1,0 +1,21 @@
+fastapi
+uvicorn[standard]
+websockets
+aiohttp
+python-multipart
+
+# LLM + Local inference
+ollama
+
+# RAG / Embeddings
+sentence-transformers
+transformers
+torch
+
+# Audio (ASR + TTS)
+openai-whisper
+pyttsx3
+imageio-ffmpeg
+
+numpy
+scikit-learn

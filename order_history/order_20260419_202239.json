@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-19T20:22:39.814484",
+  "order_id": "ORD-20260419202239-0AF34F",
+  "total_turns": 10,
+  "order": {
+    "item": "Small Green Crochet Frog",
+    "colors": "Not found",
+    "size": "Not found",
+    "extras": "Small Green Crochet Frog",
+    "quantity": "Small Green Crochet Frog",
+    "price": "Small Green Crochet Frog",
+    "name": "Nawaal",
+    "address": "Street 9, F-8, Islamabad",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}

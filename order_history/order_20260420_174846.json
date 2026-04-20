@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-20T17:48:46.447254",
+  "order_id": "ORD-20260420174846-6B02CF",
+  "total_turns": 8,
+  "order": {
+    "item": "Medium Green and Yellow Dinosaur",
+    "colors": "Not found",
+    "size": "Not found",
+    "extras": "Ayesha",
+    "quantity": "1",
+    "price": "Rs. [range]",
+    "name": "Ayesha",
+    "address": "House 12, Street 4, Rawalpindi, Pakistan",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}

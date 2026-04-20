@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-20T18:04:12.969028",
+  "order_id": "ORD-20260420180412-82EEEB",
+  "total_turns": 6,
+  "order": {
+    "item": "Keychain",
+    "colors": "Not found",
+    "size": "Not found",
+    "extras": "Keychain",
+    "quantity": "Keychain",
+    "price": "Keychain",
+    "name": "Ms. Shireen Fatima",
+    "address": "House 78, Islamabad",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}

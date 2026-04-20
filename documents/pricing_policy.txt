@@ -1,0 +1,20 @@
+Crochetzies — Pricing Policy
+=============================
+Prices at Crochetzies depend on the size of the item:
+
+  Small  : Rs. 500 to Rs. 800
+  Medium : Rs. 900 to Rs. 1400
+  Large  : Rs. 1500 to Rs. 2500
+
+The range within each size depends on:
+  - Number of colors used
+  - Complexity of the design
+  - Number of extras or add-ons requested
+  - Fine detail work (embroidery, accessories, etc.)
+
+For multiple items, the subtotal is calculated by multiplying the unit price range by the quantity.
+
+Example:
+  2 Medium cats = Rs. 1800 to Rs. 2800
+
+All payments are Cash on Delivery. No hidden fees.

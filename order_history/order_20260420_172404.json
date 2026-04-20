@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-20T17:24:04.622004",
+  "order_id": "ORD-20260420172404-312E6C",
+  "total_turns": 5,
+  "order": {
+    "item": "White Medium Bunny",
+    "colors": "Not found",
+    "size": "White Medium Bunny",
+    "extras": "White Medium Bunny",
+    "quantity": "White Medium Bunny",
+    "price": "White Medium Bunny",
+    "name": "White Medium Bunny",
+    "address": "White Medium Bunny",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}
