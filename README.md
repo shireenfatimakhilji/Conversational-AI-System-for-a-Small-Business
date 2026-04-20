@@ -187,3 +187,5 @@ The frontend proxies `/api/*` and `/ws/*` to the backend through `frontend/next.
 - Weather lookups fall back to demo data when no API key is configured.
 
 **Tech Stack**: Python, FastAPI, Ollama, Whisper, Next.js, React
+
+## Link to th edemo video: https://youtu.be/5npbhZ2dv5c

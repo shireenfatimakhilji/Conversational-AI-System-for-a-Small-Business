@@ -32,8 +32,10 @@ WEATHER_KEYWORDS = (
 
 CALENDAR_KEYWORDS = (
     "when will", "delivery date", "arrive", "arrival", "how long",
-    "how many days", "estimated date", "delivery time",
-    "when can i expect", "expected delivery",
+    "how many days", "estimated date", "delivery time", "when can i expect",
+    "expected delivery", "when will it arrive", "when will my order",
+    "delivery estimate", "when should i expect", "when is my order",
+    "what date", "which date", "delivery day",
 )
 
 
@@ -65,6 +67,11 @@ class ConversationManager:
         self._add_turn("user", user_input)
         self._manage_memory()
 
+        # Check for calendar request FIRST (higher priority than weather)
+        calendar_reply = self._handle_calendar_request_sync(user_input)
+        if calendar_reply:
+            return self._finalize_response(calendar_reply)
+
         weather_reply = self._handle_weather_request_sync(user_input)
         if weather_reply:
             return self._finalize_response(weather_reply)
@@ -87,8 +94,7 @@ class ConversationManager:
         return self._finalize_response(bot_reply)
 
     def finalize_response(self, bot_reply: str) -> str:
-        """Public alias for _finalize_response.
-        Called by api.py after it has streamed tokens to the WebSocket."""
+        """Public alias for _finalize_response."""
         return self._finalize_response(bot_reply)
 
     # ------------------------------------------------------------------ #
@@ -96,9 +102,13 @@ class ConversationManager:
     # ------------------------------------------------------------------ #
 
     async def get_response_async(self, user_input: str) -> str:
-        """Full async round-trip (no streaming). Used for non-streaming async callers."""
+        """Full async round-trip (no streaming)."""
         self._add_turn("user", user_input)
         self._manage_memory()
+
+        calendar_reply = await self._handle_calendar_request_async(user_input)
+        if calendar_reply:
+            return self._finalize_response(calendar_reply)
 
         weather_reply = await self._handle_weather_request_async(user_input)
         if weather_reply:
@@ -124,21 +134,18 @@ class ConversationManager:
     async def stream_response_async(self, user_input: str) -> AsyncIterator[str]:
         """
         Async generator for WebSocket streaming.
-
-        Yields individual tokens as they arrive from Ollama.
-        After the generator is exhausted, `self.last_streamed_reply` holds
-        the complete assembled reply so the caller can hand it to
-        `finalize_response()`.
-
-        Usage in api.py:
-            async for token in manager.stream_response_async(user_message):
-                await websocket.send_json({"type": "token", "data": token})
-            manager.finalize_response(manager.last_streamed_reply)
         """
         self._add_turn("user", user_input)
         self._manage_memory()
 
-        # Weather short-circuit — yield the whole reply as a single token.
+        # Calendar short-circuit
+        calendar_reply = await self._handle_calendar_request_async(user_input)
+        if calendar_reply:
+            self.last_streamed_reply = calendar_reply
+            yield calendar_reply
+            return
+
+        # Weather short-circuit
         weather_reply = await self._handle_weather_request_async(user_input)
         if weather_reply:
             self.last_streamed_reply = weather_reply
@@ -151,8 +158,6 @@ class ConversationManager:
         full_reply = ""
         loop = asyncio.get_event_loop()
 
-        # Ollama's streaming is synchronous; run it in an executor so we
-        # don't block the event loop while tokens trickle in.
         response_stream = await loop.run_in_executor(
             None,
             lambda: ollama.chat(model=MODEL_NAME, messages=messages, stream=True),
@@ -162,16 +167,69 @@ class ConversationManager:
             token = chunk["message"]["content"]
             full_reply += token
             yield token
-            await asyncio.sleep(0)  # yield control back to the event loop
+            await asyncio.sleep(0)
 
-        # Tool-call post-processing — if the assembled reply contains a tool
-        # call, run the tool and yield the follow-up reply as a single block.
         tool_reply = self._handle_tool_call(user_input, full_reply)
         if tool_reply:
             full_reply = tool_reply
             yield tool_reply
 
         self.last_streamed_reply = full_reply
+
+    # ------------------------------------------------------------------ #
+    # Calendar handling — NEW                                              #
+    # ------------------------------------------------------------------ #
+
+    def _looks_like_calendar_request(self, user_input: str) -> bool:
+        """Check if user is asking about delivery date/timing."""
+        normalized = self._normalize_text(user_input)
+        return any(kw in normalized for kw in CALENDAR_KEYWORDS)
+
+    def _handle_calendar_request_sync(self, user_input: str) -> str | None:
+        """Synchronous calendar request handler."""
+        if not self._looks_like_calendar_request(user_input):
+            return None
+        return self._generate_calendar_reply_sync()
+
+    async def _handle_calendar_request_async(self, user_input: str) -> str | None:
+        """Asynchronous calendar request handler."""
+        if not self._looks_like_calendar_request(user_input):
+            return None
+        return await self._generate_calendar_reply_async()
+
+    def _generate_calendar_reply_sync(self) -> str:
+        """Call calendar tool and format response."""
+        today = datetime.now().strftime("%Y-%m-%d")
+        result = execute_tool_sync("calendar", {
+            "order_date": today,
+            "processing_days": 7
+        })
+
+        if not result.get("ok"):
+            error_msg = result.get("error", "Unknown error")
+            print(f"[Calendar] Tool failed: {error_msg}")
+            return (
+                f"I tried to calculate your delivery date but ran into an issue. "
+                f"Typically, delivery takes 5-7 business days. You can expect your order "
+                f"within about a week from today!"
+            )
+
+        data = result.get("result", {})
+        delivery_date = data.get("estimated_delivery_date", "within 7 days")
+        message = data.get("message", f"Your order will be delivered by {delivery_date}.")
+        
+        # Format the date nicely if possible
+        try:
+            date_obj = datetime.strptime(delivery_date, "%Y-%m-%d")
+            formatted_date = date_obj.strftime("%A, %B %d, %Y")
+            return f"Your order will be delivered by {formatted_date}! That's about 7 days from today. 😊"
+        except (ValueError, TypeError):
+            return message
+
+    async def _generate_calendar_reply_async(self) -> str:
+        """Async version of calendar reply generation."""
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, self._generate_calendar_reply_sync)
 
     # ------------------------------------------------------------------ #
     # Reset / stats                                                        #
@@ -217,13 +275,6 @@ class ConversationManager:
     # ------------------------------------------------------------------ #
 
     def _build_messages(self, current_rag_context: str | None = None) -> list[dict]:
-        """
-        Message layout sent to Ollama:
-          1. System prompt
-          2. Conversation summary (if memory was compressed)
-          3. RAG context (if retrieval found anything)
-          4. Conversation history (user / assistant turns)
-        """
         messages: list[dict] = [{"role": "system", "content": self.system_prompt}]
 
         if self.summary:
@@ -395,7 +446,7 @@ class ConversationManager:
         return " ".join(parts)
 
     # ------------------------------------------------------------------ #
-    # Shared weather helpers                                               #
+    # Shared helpers                                                       #
     # ------------------------------------------------------------------ #
 
     def _looks_like_weather_request(self, user_input: str) -> bool:
@@ -443,6 +494,17 @@ class ConversationManager:
         return self._resolve_tool_result(user_input, tool_name, result["result"])
 
     def _resolve_tool_result(self, user_input: str, tool_name: str, result: dict) -> str:
+        # Special handling for calendar to ensure nice formatting
+        if tool_name == "calendar":
+            delivery_date = result.get("estimated_delivery_date", "within 7 days")
+            try:
+                date_obj = datetime.strptime(delivery_date, "%Y-%m-%d")
+                formatted_date = date_obj.strftime("%A, %B %d, %Y")
+                return f"Your order will be delivered by {formatted_date}! That's about 7 days from today. 😊"
+            except (ValueError, TypeError):
+                return result.get("message", f"Your order will be delivered by {delivery_date}.")
+
+        # Default handling for other tools
         result_text = json.dumps(result, indent=2)
         followup_prompt = (
             f"The user asked: {user_input}\n\n"

@@ -52,10 +52,13 @@ Trigger: any question about WHEN an order will arrive, delivery date, or how lon
 RULE: NEVER answer delivery timing from memory. ALWAYS call the calendar tool first.
 
 Call format:
-  {{"tool": "calendar", "args": {{"start_date": "YYYY-MM-DD", "days_to_add": 7}}}}
+  {{"tool": "calendar", "args": {{"order_date": "YYYY-MM-DD", "processing_days": 7}}}}
 
-- start_date = today's date (or the order date if the user specifies one)
-- days_to_add = 5 to 7 (use 7 as the default safe estimate)
+- order_date = today's date in YYYY-MM-DD format
+- processing_days = 7 (standard delivery time for crochet orders)
+
+Example: If today is April 20, 2026, use:
+  {{"tool": "calendar", "args": {{"order_date": "2026-04-20", "processing_days": 7}}}}
 
 After the tool returns, state the exact estimated delivery date clearly and warmly.
 
