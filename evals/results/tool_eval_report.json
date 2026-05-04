@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-05-04T01:25:06.154037",
+  "total_elapsed_s": 208.54,
+  "results": {
+    "crm": {
+      "total": 30,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "elapsed_s": 1.89
+    },
+    "calculator": {
+      "total": 41,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "elapsed_s": 0.02
+    },
+    "calendar": {
+      "total": 27,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "elapsed_s": 0.03
+    },
+    "weather": {
+      "total": 31,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "elapsed_s": 0.03
+    },
+    "failures": {
+      "total": 51,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "elapsed_s": 0.43
+    },
+    "llm": {
+      "total": 31,
+      "correct": 22,
+      "overall_accuracy": 0.7097,
+      "by_category": {
+        "crm": {
+          "total": 7,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "calculator": {
+          "total": 5,
+          "correct": 4,
+          "accuracy": 0.8
+        },
+        "calendar": {
+          "total": 7,
+          "correct": 7,
+          "accuracy": 1.0
+        },
+        "weather": {
+          "total": 5,
+          "correct": 5,
+          "accuracy": 1.0
+        },
+        "no_tool": {
+          "total": 7,
+          "correct": 6,
+          "accuracy": 0.8571
+        }
+      },
+      "elapsed_s": 206.13,
+      "passed": true
+    }
+  },
+  "overall_passed": true
+}
