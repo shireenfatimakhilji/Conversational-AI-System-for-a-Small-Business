@@ -16,7 +16,7 @@ import ollama
 from config import MAX_TURNS, MODEL_NAME
 from orchestrator import execute_tool_sync
 from prompt_temp import build_summarize_prompt, build_system_prompt
-from retrieval.retriever import retrieve
+#from retrieval.retriever import retrieve
 
 SESSION_END_SIGNAL = "order-complete"
 
@@ -258,6 +258,7 @@ class ConversationManager:
 
     def _get_rag_context(self, user_input: str) -> str | None:
         try:
+            from retrieval.retriever import retrieve  # ← add this line
             chunks = retrieve(user_input)
             if not chunks:
                 return None

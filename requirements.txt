@@ -1,21 +1,27 @@
+# ── Web framework ─────────────────────────────────────────────────────────────
 fastapi
 uvicorn[standard]
 websockets
 aiohttp
 python-multipart
 
-# LLM + Local inference
+# ── LLM + Local inference ─────────────────────────────────────────────────────
 ollama
 
-# RAG / Embeddings
-sentence-transformers
-transformers
-torch
+# ── RAG / Embeddings ──────────────────────────────────────────────────────────
+chromadb==0.5.23
+sentence-transformers==2.7.0
+transformers==4.41.2
+tokenizers==0.19.1
+huggingface_hub==0.23.4
+posthog==3.0.2
 
-# Audio (ASR + TTS)
+# ── Audio (ASR + TTS) ─────────────────────────────────────────────────────────
 openai-whisper
 pyttsx3
 imageio-ffmpeg
 
-numpy
+# ── Numeric / ML ──────────────────────────────────────────────────────────────
+numpy<2.0
 scikit-learn
+torch

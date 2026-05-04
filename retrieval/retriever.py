@@ -5,6 +5,9 @@ Usage:
     from retrieval.retriever import retrieve
     chunks = retrieve("what is your return policy?")
 """
+import os
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+
 
 from dataclasses import dataclass
 from typing import List, Optional
@@ -14,7 +17,6 @@ import threading
 import atexit
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-import os
 CHROMA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chroma_db")
 EMBED_MODEL = "all-MiniLM-L6-v2"
 COLLECTION  = "crochetzies_docs"

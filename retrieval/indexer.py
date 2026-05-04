@@ -6,6 +6,7 @@ Run again whenever documents are updated.
 """
 
 import os
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
 import chromadb
 from sentence_transformers import SentenceTransformer
 
