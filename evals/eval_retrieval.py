@@ -11,7 +11,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from retrieval.retriever import retrieve
-from eval.ground_truth import GROUND_TRUTH
+from evals.ground_truth import GROUND_TRUTH
 
 TOP_K = 3
 

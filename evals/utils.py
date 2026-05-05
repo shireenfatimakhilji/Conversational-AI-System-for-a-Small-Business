@@ -112,7 +112,7 @@ async def delete_session(session: aiohttp.ClientSession, session_id: str) -> Non
     """DELETE /session/{session_id}  — best-effort cleanup.
 
     404 is expected: api.py already deletes the session when the WebSocket
-    closes (WebSocketDisconnect handler), so the eval script's explicit
+    closes (WebSocketDisconnect handler), so the evals script's explicit
     cleanup call will often find it already gone. This is harmless.
     """
     try:

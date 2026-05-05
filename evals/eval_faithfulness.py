@@ -1,16 +1,16 @@
-# eval/eval_faithfulness.py
+# evals/eval_faithfulness.py
 """
 Checks if LLM answers are grounded in retrieved documents.
 Faithfulness = answer only contains info from retrieved chunks.
 
-Run from project root: python eval/eval_faithfulness.py
+Run from project root: python evals/eval_faithfulness.py
 """
 
 import sys, os, json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from retrieval.retriever import retrieve
-from eval.ground_truth import GROUND_TRUTH
+from evals.ground_truth import GROUND_TRUTH
 import ollama
 from config import MODEL_NAME
 
@@ -106,15 +106,15 @@ def run_faithfulness_eval():
     print(f"Avg faithfulness:  {avg_score:.2f}/5")
     print("=" * 60)
 
-    os.makedirs("eval/results", exist_ok=True)
-    with open("eval/results/faithfulness_metrics.json", "w") as f:
+    os.makedirs("evals/results", exist_ok=True)
+    with open("evals/results/faithfulness_metrics.json", "w") as f:
         json.dump({
             "avg_faithfulness_score": avg_score,
             "max_score": 5,
             "queries_evaluated": len(results),
             "per_query": results
         }, f, indent=2)
-    print("Results saved to eval/results/faithfulness_metrics.json")
+    print("Results saved to evals/results/faithfulness_metrics.json")
 
 if __name__ == "__main__":
     run_faithfulness_eval()

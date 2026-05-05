@@ -1,4 +1,4 @@
-# eval/run_evals.py
+# evals/run_evals.py
 """
 Master evaluation runner -- runs all evaluations in sequence.
 Usage: python evals/run_evals.py
@@ -52,12 +52,12 @@ def run_retrieval_eval():
     print_section("STEP 1 -- RETRIEVAL EVALUATION (Precision@k & Recall@k)")
     start = time.time()
     try:
-        from eval.eval_retrieval import run_retrieval_eval as _run
+        from evals.eval_retrieval import run_retrieval_eval as _run
         _run()
-        print(f"\n  [PASSED] Retrieval eval completed in {time.time() - start:.1f}s")
+        print(f"\n  [PASSED] Retrieval evals completed in {time.time() - start:.1f}s")
         return True
     except Exception as e:
-        print(f"\n  [FAILED] Retrieval eval: {e}")
+        print(f"\n  [FAILED] Retrieval evals: {e}")
         return False
 
 
@@ -69,12 +69,12 @@ def run_faithfulness_eval():
     print_section("STEP 2 -- FAITHFULNESS EVALUATION (LLM-as-Judge)")
     start = time.time()
     try:
-        from eval.eval_faithfulness import run_faithfulness_eval as _run
+        from evals.eval_faithfulness import run_faithfulness_eval as _run
         _run()
-        print(f"\n  [PASSED] Faithfulness eval completed in {time.time() - start:.1f}s")
+        print(f"\n  [PASSED] Faithfulness evals completed in {time.time() - start:.1f}s")
         return True
     except Exception as e:
-        print(f"\n  [FAILED] Faithfulness eval: {e}")
+        print(f"\n  [FAILED] Faithfulness evals: {e}")
         return False
 
 
@@ -86,12 +86,12 @@ def run_conversation_eval():
     print_section("STEP 3 -- CONVERSATION EVALUATION (Multi-turn Dialogues)")
     start = time.time()
     try:
-        from eval.eval_conversations import run_conversation_eval as _run
+        from evals.eval_conversations import run_conversation_eval as _run
         _run()
-        print(f"\n  [PASSED] Conversation eval completed in {time.time() - start:.1f}s")
+        print(f"\n  [PASSED] Conversation evals completed in {time.time() - start:.1f}s")
         return True
     except Exception as e:
-        print(f"\n  [FAILED] Conversation eval: {e}")
+        print(f"\n  [FAILED] Conversation evals: {e}")
         return False
 
 
@@ -120,21 +120,21 @@ def run_performance_eval():
         for result in latency_results.values():
             violations.extend(check_thresholds(result))
 
-        os.makedirs("eval/results", exist_ok=True)
+        os.makedirs("evals/results", exist_ok=True)
         perf_data = {
             "latency":    {k: v.to_dict() for k, v in latency_results.items()},
             "throughput": throughput_result.to_dict(),
             "threshold_violations": violations,
         }
-        with open("eval/results/performance_metrics.json", "w") as f:
+        with open("evals/results/performance_metrics.json", "w") as f:
             json.dump(perf_data, f, indent=2)
-        print("  Results saved to eval/results/performance_metrics.json")
-        print(f"\n  [PASSED] Performance eval completed in {time.time() - start:.1f}s")
+        print("  Results saved to evals/results/performance_metrics.json")
+        print(f"\n  [PASSED] Performance evals completed in {time.time() - start:.1f}s")
         return True, perf_data
 
     except Exception as e:
         import traceback
-        print(f"\n  [FAILED] Performance eval: {e}")
+        print(f"\n  [FAILED] Performance evals: {e}")
         traceback.print_exc()
         return False, None
 
@@ -287,7 +287,7 @@ def generate_final_report(results: dict, tool_results: dict, perf_data: dict | N
     }
 
     # -- Retrieval --
-    retrieval_path = "eval/results/retrieval_metrics.json"
+    retrieval_path = "evals/results/retrieval_metrics.json"
     if os.path.exists(retrieval_path):
         with open(retrieval_path) as f:
             r = json.load(f)
@@ -303,10 +303,10 @@ def generate_final_report(results: dict, tool_results: dict, perf_data: dict | N
         print(f"    Avg Recall@{r.get('top_k')}:    {r.get('avg_recall_at_k', 0):.3f}")
         print(f"    Queries with hits: {r.get('hits')}/{r.get('total_queries')}")
     else:
-        print("  RETRIEVAL METRICS: not found (eval may have failed)")
+        print("  RETRIEVAL METRICS: not found (evals may have failed)")
 
     # -- Faithfulness --
-    faithful_path = "eval/results/faithfulness_metrics.json"
+    faithful_path = "evals/results/faithfulness_metrics.json"
     if os.path.exists(faithful_path):
         with open(faithful_path) as f:
             fd = json.load(f)
@@ -318,10 +318,10 @@ def generate_final_report(results: dict, tool_results: dict, perf_data: dict | N
         print(f"    Avg Faithfulness: {fd.get('avg_faithfulness_score', 0):.2f}/5")
         print(f"    Queries evaluated: {fd.get('queries_evaluated')}")
     else:
-        print("\n  FAITHFULNESS METRICS: not found (eval may have failed)")
+        print("\n  FAITHFULNESS METRICS: not found (evals may have failed)")
 
     # -- Conversations --
-    convo_path = "eval/results/conversation_metrics.json"
+    convo_path = "evals/results/conversation_metrics.json"
     if os.path.exists(convo_path):
         with open(convo_path) as f:
             c = json.load(f)
@@ -340,10 +340,10 @@ def generate_final_report(results: dict, tool_results: dict, perf_data: dict | N
         print(f"    Avg Overall:          {c.get('avg_overall', 0):.2f}/5")
         print(f"    Dialogues: {c.get('successful')}/{c.get('total_dialogues')} successful")
     else:
-        print("\n  CONVERSATION METRICS: not found (eval may have failed)")
+        print("\n  CONVERSATION METRICS: not found (evals may have failed)")
 
     # -- Performance --
-    perf_path = "eval/results/performance_metrics.json"
+    perf_path = "evals/results/performance_metrics.json"
     if os.path.exists(perf_path):
         with open(perf_path) as f:
             p = json.load(f)
@@ -369,7 +369,7 @@ def generate_final_report(results: dict, tool_results: dict, perf_data: dict | N
         else:
             print("    All latency thresholds passed")
     else:
-        print("\n  PERFORMANCE METRICS: not found (eval may have failed)")
+        print("\n  PERFORMANCE METRICS: not found (evals may have failed)")
 
     # -- Tool unit test summary --
     print(f"\n  TOOL UNIT TEST RESULTS")

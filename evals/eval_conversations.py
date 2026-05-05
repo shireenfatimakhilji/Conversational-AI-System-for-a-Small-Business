@@ -1,9 +1,9 @@
-# eval/eval_conversations.py
+# evals/eval_conversations.py
 """
 10+ multi-turn dialogue tests evaluated by LLM-as-judge.
 Scores: task completion, coherence, policy adherence.
 
-Run from project root: python eval/eval_conversations.py
+Run from project root: python evals/eval_conversations.py
 """
 
 import sys, os, json
@@ -430,8 +430,8 @@ def run_conversation_eval():
         for cat, scores in by_category.items():
             print(f"  {cat}: {sum(scores)/len(scores):.2f}/5 ({len(scores)} dialogues)")
 
-    os.makedirs("eval/results", exist_ok=True)
-    with open("eval/results/conversation_metrics.json", "w") as f:
+    os.makedirs("evals/results", exist_ok=True)
+    with open("evals/results/conversation_metrics.json", "w") as f:
         json.dump({
             "total_dialogues":       len(results),
             "successful":            len(valid),
@@ -441,7 +441,7 @@ def run_conversation_eval():
             "avg_overall":           avg_overall if valid else 0,
             "per_dialogue":          results
         }, f, indent=2)
-    print("\nResults saved to eval/results/conversation_metrics.json")
+    print("\nResults saved to evals/results/conversation_metrics.json")
 
 if __name__ == "__main__":
     run_conversation_eval()

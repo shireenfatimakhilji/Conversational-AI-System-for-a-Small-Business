@@ -1,4 +1,4 @@
-# eval/ground_truth.py
+# evals/ground_truth.py
 """
 20-30 test queries with manually annotated relevant document sources.
 This is your ground truth dataset for RAG evaluation.
