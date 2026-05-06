@@ -27,8 +27,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tools.weather import WeatherTool
 
 
+# def run(coro):
+#     return asyncio.get_event_loop().run_until_complete(coro)
 def run(coro):
-    return asyncio.get_event_loop().run_until_complete(coro)
+    return asyncio.run(coro)
 
 
 # Demo-mode tool (no real API key needed)

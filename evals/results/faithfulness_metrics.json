@@ -1,0 +1,117 @@
+{
+  "avg_faithfulness_score": 3.7,
+  "max_score": 5,
+  "queries_evaluated": 10,
+  "per_query": [
+    {
+      "query": "what is your return policy?",
+      "answer": "You are not eligible for returns or exchanges due to the nature of custom-made items being ordered from Crochetzies. However, if there is a problem with your order such as a defect, wrong color, or damage during delivery, please contact us via email at crochetzies@gmail.com or WhatsApp +92-300-0000000 and we will work to resolve the issue promptly.",
+      "score": 4,
+      "reason": "The answer correctly states that the return policy is not applicable due to custom-made items and mentions the contact information for reports.",
+      "sources": [
+        "return_policy.txt",
+        "payment_and_delivery.txt",
+        "faq_wrong_order.txt"
+      ]
+    },
+    {
+      "query": "how much does a large item cost?",
+      "answer": "A large item costs between Rs. 1500 and Rs. 2500, based on the pricing policy provided by Crochetzies.",
+      "score": 3,
+      "reason": "The answer is partially correct but includes additional information not present in the provided context.",
+      "sources": [
+        "product_custom_request.txt",
+        "pricing_policy.txt",
+        "product_parrot.txt"
+      ]
+    },
+    {
+      "query": "how long does delivery take?",
+      "answer": "Delivery typically takes 2 to 3 business days after the item has been produced and is ready for shipment. If you need your order by a specific date, please inform us during checkout so we can provide accurate estimated timelines.",
+      "score": 4,
+      "reason": "The answer correctly states that delivery typically takes 2 to 3 business days after the item has been produced and is ready for shipment. It also provides a minor explanation about when to inform them if an order needs urgent delivery, which aligns with the provided context.",
+      "sources": [
+        "faq_production_vs_delivery.txt",
+        "faq_production_vs_delivery.txt",
+        "faq_how_long_delivery.txt"
+      ]
+    },
+    {
+      "query": "what payment methods do you accept?",
+      "answer": "We only accept Cash on Delivery (COD) as the payment method. No advance payments, bank transfers, or online payments are accepted. You will pay upon receiving your order.",
+      "score": 4,
+      "reason": "The answer correctly states that Crochetzies accepts Cash on Delivery (COD) as the payment method and mentions no advance payments, bank transfers, or online payments are accepted. It also accurately reflects that you will pay upon receiving your order.",
+      "sources": [
+        "faq_payment_methods.txt",
+        "payment_and_delivery.txt",
+        "faq_how_to_order.txt"
+      ]
+    },
+    {
+      "query": "do you gift wrap orders?",
+      "answer": "Yes, we offer free gift wrapping for all Crochetzies orders. This includes birthday presents, Eid gifts, baby showers, weddings and bridal favors, Valentine's Day, children's gifts, and just because! The gift wrapping is part of the order packaging to ensure your items arrive safely and are ready for immediate giving or display when received.",
+      "score": 4,
+      "reason": "The answer accurately reflects the fact that gift wrapping is included with every order and is not explicitly requested.",
+      "sources": [
+        "faq_gift_wrapping.txt",
+        "packaging.txt",
+        "packaging.txt"
+      ]
+    },
+    {
+      "query": "how do I wash my crochet item?",
+      "answer": "To keep your Crochetzies item looking its best:\n\n- Hand wash gently in cold or lukewarm water  \n- Use a mild detergent\n- Do not scrub or wring\n- Rinse thoroughly",
+      "score": 4,
+      "reason": "The answer correctly states to hand wash gently in cold or lukewarm water and use mild detergent, but omits the steps of not scrubbing or wringing and rinsing thoroughly.",
+      "sources": [
+        "care_instructions_general.txt",
+        "care_instructions_babies.txt",
+        "care_instructions_general.txt"
+      ]
+    },
+    {
+      "query": "what animals do you make?",
+      "answer": "We make stuffed animals like cats, dogs, bunnies, bears, foxes, elephants, and many more. We also create fantasy creatures such as dragons, unicorns, dinosaurs, axolotls, sea creatures including sharks, octopuses, jellyfish, whales, crabs, turtles, insects like bees, butterflies, and other bugs, and food or object plushies like strawberries, mushrooms, avocados. Additionally, we make decorative items like stars, rainbows, suns, ghosts, mini dolls and amigurumi characters, keychains, bag charms, bookmarks, hair accessories, and any other item that is not listed in our standard product list as per your request.",
+      "score": 3,
+      "reason": "The answer contains factual information that is verified by the original FAQ, but it also includes some creative additions that are not directly from the context provided.",
+      "sources": [
+        "faq_what_items_do_you_make.txt",
+        "faq_what_items_do_you_make.txt",
+        "product_custom_request.txt"
+      ]
+    },
+    {
+      "query": "can I order in bulk?",
+      "answer": "Yes, you can order in bulk. Please reach out to Crochetzies for bulk orders by contacting them directly at crochetzies@gmail.com or using WhatsApp +92-300-0. For events such as weddings, corporate gifts, birthdays, Eid hampers, and other special occasions, they welcome bulk orders of 10 or more items.",
+      "score": 5,
+      "reason": "The answer correctly states 'Yes, you can order in bulk' and provides the contact information for bulk orders.",
+      "sources": [
+        "faq_production_vs_delivery.txt",
+        "customization_guide.txt",
+        "bulk_orders.txt"
+      ]
+    },
+    {
+      "query": "how do I place an order?",
+      "answer": "To place an order with Crochetzies, follow these steps:\n\n1. Choose a method:\n   - Use our chatbot to guide you through the process.\n   - Message us at +92-300-0000000.\n   - Email us at crochetzies@gmail.com.\n\n2. Provide details:\n   - Specify the item you want.\n   - Indicate colors if desired.\n   - State your preferred size (Small, Medium, or Large).\n   - Inform about any extras included.\n   - Confirm quantity needed for your order.",
+      "score": 3,
+      "reason": "The answer is mostly faithful, but it incorrectly mentions 'hen your order is on the way' as an additional instruction and omits some of the necessary steps.",
+      "sources": [
+        "faq_how_to_order.txt",
+        "faq_how_long_delivery.txt",
+        "faq_production_vs_delivery.txt"
+      ]
+    },
+    {
+      "query": "what colors can I choose?",
+      "answer": "You can choose your own colors for the items at Crochetzies. You can describe the color, give a color name, or even describe a reference image and we will do our best to match it without an extra charge for custom colors.",
+      "score": 3,
+      "reason": "The answer is mostly faithful to the provided context.",
+      "sources": [
+        "faq_colors_available.txt",
+        "faq_can_i_choose_colors.txt",
+        "faq_colors_available.txt"
+      ]
+    }
+  ]
+}

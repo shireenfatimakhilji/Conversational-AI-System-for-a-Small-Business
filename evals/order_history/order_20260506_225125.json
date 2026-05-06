@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-05-06T22:51:25.165719",
+  "order_id": "ORD-20260506225125-7AB42E",
+  "total_turns": 6,
+  "order": {
+    "item": "Cat plushies",
+    "colors": "Cat plushies",
+    "size": "Cat plushies",
+    "extras": "Cat plushies",
+    "quantity": "Cat plushies",
+    "price": "Cat plushies",
+    "name": "[Please enter full name]",
+    "address": "[Please provide address]",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}

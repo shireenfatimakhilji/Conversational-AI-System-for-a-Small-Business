@@ -79,8 +79,8 @@ def run_retrieval_eval():
 
     # Save results to file
     import json
-    os.makedirs("eval/results", exist_ok=True)
-    with open("eval/results/retrieval_metrics.json", "w") as f:
+    os.makedirs("results", exist_ok=True)
+    with open("results/retrieval_metrics.json", "w") as f:
         json.dump({
             "avg_precision_at_k": avg_precision,
             "avg_recall_at_k":    avg_recall,
@@ -89,7 +89,7 @@ def run_retrieval_eval():
             "hits":               hits,
             "per_query":          results
         }, f, indent=2)
-    print("Results saved to eval/results/retrieval_metrics.json")
+    print("Results saved to results/retrieval_metrics.json")
 
 if __name__ == "__main__":
     run_retrieval_eval()

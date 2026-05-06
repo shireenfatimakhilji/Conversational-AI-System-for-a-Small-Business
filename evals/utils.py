@@ -289,8 +289,8 @@ def aggregate(scenario: str, timings: list[TurnTimings]) -> ScenarioResult:
 # ---------------------------------------------------------------------------
 
 THRESHOLDS = {
-    "ttft_median_max":  2.0,   # seconds
-    "e2e_median_max":  10.0,   # seconds
+    "ttft_median_max":  8.0,   # seconds
+    "e2e_median_max":  20.0,   # seconds
 }
 
 

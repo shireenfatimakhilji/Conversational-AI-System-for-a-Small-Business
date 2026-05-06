@@ -1,0 +1,480 @@
+{
+  "avg_precision_at_k": 0.5066666666666666,
+  "avg_recall_at_k": 0.6466666666666666,
+  "top_k": 3,
+  "total_queries": 25,
+  "hits": 19,
+  "per_query": [
+    {
+      "query": "what is your return policy?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "return_policy.txt",
+        "payment_and_delivery.txt",
+        "faq_wrong_order.txt"
+      ],
+      "relevant": [
+        "return_policy.txt",
+        "faq_wrong_order.txt"
+      ],
+      "scores": [
+        0.438,
+        0.25,
+        0.24
+      ]
+    },
+    {
+      "query": "how much does a large item cost?",
+      "p@k": 0.3333333333333333,
+      "r@k": 0.5,
+      "retrieved": [
+        "product_custom_request.txt",
+        "pricing_policy.txt",
+        "product_parrot.txt"
+      ],
+      "relevant": [
+        "pricing_policy.txt",
+        "pricing.txt"
+      ],
+      "scores": [
+        0.547,
+        0.542,
+        0.529
+      ]
+    },
+    {
+      "query": "how long does delivery take?",
+      "p@k": 1.0,
+      "r@k": 0.6666666666666666,
+      "retrieved": [
+        "faq_production_vs_delivery.txt",
+        "faq_production_vs_delivery.txt",
+        "faq_how_long_delivery.txt"
+      ],
+      "relevant": [
+        "faq_how_long_delivery.txt",
+        "faq_production_vs_delivery.txt",
+        "delivery.txt"
+      ],
+      "scores": [
+        0.611,
+        0.567,
+        0.521
+      ]
+    },
+    {
+      "query": "what payment methods do you accept?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_payment_methods.txt",
+        "payment_and_delivery.txt",
+        "faq_how_to_order.txt"
+      ],
+      "relevant": [
+        "faq_payment_methods.txt",
+        "payment_and_delivery.txt"
+      ],
+      "scores": [
+        0.607,
+        0.473,
+        0.305
+      ]
+    },
+    {
+      "query": "do you gift wrap orders?",
+      "p@k": 1.0,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_gift_wrapping.txt",
+        "packaging.txt",
+        "packaging.txt"
+      ],
+      "relevant": [
+        "faq_gift_wrapping.txt",
+        "packaging.txt"
+      ],
+      "scores": [
+        0.657,
+        0.634,
+        0.557
+      ]
+    },
+    {
+      "query": "how do I wash my crochet item?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "care_instructions_general.txt",
+        "care_instructions_babies.txt",
+        "care_instructions_general.txt"
+      ],
+      "relevant": [
+        "care_instructions_general.txt"
+      ],
+      "scores": [
+        0.759,
+        0.582,
+        0.531
+      ]
+    },
+    {
+      "query": "what animals do you make?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_what_items_do_you_make.txt",
+        "faq_what_items_do_you_make.txt",
+        "product_custom_request.txt"
+      ],
+      "relevant": [
+        "faq_what_items_do_you_make.txt"
+      ],
+      "scores": [
+        0.447,
+        0.426,
+        0.365
+      ]
+    },
+    {
+      "query": "can I order in bulk?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_production_vs_delivery.txt",
+        "customization_guide.txt",
+        "bulk_orders.txt"
+      ],
+      "relevant": [
+        "bulk_orders.txt",
+        "customization_guide.txt"
+      ],
+      "scores": [
+        0.599,
+        0.584,
+        0.565
+      ]
+    },
+    {
+      "query": "how do I place an order?",
+      "p@k": 0.3333333333333333,
+      "r@k": 0.5,
+      "retrieved": [
+        "faq_how_to_order.txt",
+        "faq_how_long_delivery.txt",
+        "faq_production_vs_delivery.txt"
+      ],
+      "relevant": [
+        "faq_how_to_order.txt",
+        "ordering_guide.txt"
+      ],
+      "scores": [
+        0.673,
+        0.55,
+        0.489
+      ]
+    },
+    {
+      "query": "what colors can I choose?",
+      "p@k": 1.0,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_colors_available.txt",
+        "faq_can_i_choose_colors.txt",
+        "faq_colors_available.txt"
+      ],
+      "relevant": [
+        "faq_colors_available.txt",
+        "faq_can_i_choose_colors.txt"
+      ],
+      "scores": [
+        0.58,
+        0.562,
+        0.559
+      ]
+    },
+    {
+      "query": "what sizes are available?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "product_flamingo.txt",
+        "product_crab.txt",
+        "product_elephant_2.txt"
+      ],
+      "relevant": [
+        "customization_guide.txt",
+        "pricing_policy.txt"
+      ],
+      "scores": [
+        0.546,
+        0.546,
+        0.542
+      ]
+    },
+    {
+      "query": "how do I contact Crochetzies?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "business_overview.txt",
+        "contact_and_support.txt",
+        "return_policy.txt"
+      ],
+      "relevant": [
+        "about_us.txt",
+        "faq.txt"
+      ],
+      "scores": [
+        0.671,
+        0.646,
+        0.614
+      ]
+    },
+    {
+      "query": "is there free gift wrapping?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_gift_wrapping.txt",
+        "packaging.txt",
+        "gift_ideas_valentines.txt"
+      ],
+      "relevant": [
+        "faq_gift_wrapping.txt",
+        "packaging.txt"
+      ],
+      "scores": [
+        0.721,
+        0.62,
+        0.528
+      ]
+    },
+    {
+      "query": "what extras can I add to my order?",
+      "p@k": 0.3333333333333333,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_extras_what_are_they.txt",
+        "customization_guide.txt",
+        "faq_how_to_order.txt"
+      ],
+      "relevant": [
+        "customization_guide.txt"
+      ],
+      "scores": [
+        0.681,
+        0.565,
+        0.523
+      ]
+    },
+    {
+      "query": "do you deliver outside Pakistan?",
+      "p@k": 0.3333333333333333,
+      "r@k": 0.5,
+      "retrieved": [
+        "faq_do_you_ship_outside_pakistan.txt",
+        "payment_and_delivery.txt",
+        "faq_production_vs_delivery.txt"
+      ],
+      "relevant": [
+        "delivery.txt",
+        "payment_and_delivery.txt"
+      ],
+      "scores": [
+        0.647,
+        0.631,
+        0.615
+      ]
+    },
+    {
+      "query": "how much does a small crochet cat cost?",
+      "p@k": 0.3333333333333333,
+      "r@k": 0.5,
+      "retrieved": [
+        "product_cat.txt",
+        "pricing_policy.txt",
+        "size_guide.txt"
+      ],
+      "relevant": [
+        "pricing_policy.txt",
+        "pricing.txt"
+      ],
+      "scores": [
+        0.638,
+        0.569,
+        0.548
+      ]
+    },
+    {
+      "query": "can I customize the color of my order?",
+      "p@k": 0.6666666666666666,
+      "r@k": 0.5,
+      "retrieved": [
+        "faq_can_i_choose_colors.txt",
+        "faq_can_i_choose_colors.txt",
+        "faq_production_vs_delivery.txt"
+      ],
+      "relevant": [
+        "faq_can_i_choose_colors.txt",
+        "customization_guide.txt"
+      ],
+      "scores": [
+        0.648,
+        0.595,
+        0.508
+      ]
+    },
+    {
+      "query": "what happens if I receive the wrong item?",
+      "p@k": 1.0,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_wrong_order.txt",
+        "return_policy.txt",
+        "faq_wrong_order.txt"
+      ],
+      "relevant": [
+        "faq_wrong_order.txt",
+        "return_policy.txt"
+      ],
+      "scores": [
+        0.561,
+        0.492,
+        0.38
+      ]
+    },
+    {
+      "query": "how do I care for a baby crochet item?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "care_instructions_babies.txt",
+        "faq_is_it_safe_for_babies.txt",
+        "care_instructions_general.txt"
+      ],
+      "relevant": [
+        "care_instructions_babies.txt",
+        "care_instructions_general.txt"
+      ],
+      "scores": [
+        0.758,
+        0.693,
+        0.655
+      ]
+    },
+    {
+      "query": "what is the difference between production and delivery time?",
+      "p@k": 1.0,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_production_vs_delivery.txt",
+        "faq_production_vs_delivery.txt",
+        "faq_production_vs_delivery.txt"
+      ],
+      "relevant": [
+        "faq_production_vs_delivery.txt"
+      ],
+      "scores": [
+        0.853,
+        0.46,
+        0.445
+      ]
+    },
+    {
+      "query": "do you make crochet keychains?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "product_keychains_overview.txt",
+        "care_instructions_keychains.txt",
+        "product_bag_charms.txt"
+      ],
+      "relevant": [
+        "faq_what_items_do_you_make.txt",
+        "items_catalog.txt"
+      ],
+      "scores": [
+        0.73,
+        0.703,
+        0.593
+      ]
+    },
+    {
+      "query": "what is the price of a medium bunny?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "product_bunny.txt",
+        "product_duck.txt",
+        "product_custom_request.txt"
+      ],
+      "relevant": [
+        "pricing_policy.txt",
+        "pricing.txt"
+      ],
+      "scores": [
+        0.515,
+        0.481,
+        0.47
+      ]
+    },
+    {
+      "query": "can I get a crochet unicorn?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "product_unicorn.txt",
+        "product_giraffe.txt",
+        "product_frog.txt"
+      ],
+      "relevant": [
+        "popular_items.txt",
+        "faq_what_items_do_you_make.txt"
+      ],
+      "scores": [
+        0.726,
+        0.605,
+        0.596
+      ]
+    },
+    {
+      "query": "do you accept advance payment?",
+      "p@k": 0.6666666666666666,
+      "r@k": 1.0,
+      "retrieved": [
+        "faq_payment_methods.txt",
+        "payment_and_delivery.txt",
+        "faq_can_i_cancel.txt"
+      ],
+      "relevant": [
+        "faq_payment_methods.txt",
+        "payment_and_delivery.txt"
+      ],
+      "scores": [
+        0.537,
+        0.424,
+        0.337
+      ]
+    },
+    {
+      "query": "what is the most popular item?",
+      "p@k": 0.0,
+      "r@k": 0.0,
+      "retrieved": [
+        "faq_what_items_do_you_make.txt",
+        "customization_guide.txt",
+        "faq_what_items_do_you_make.txt"
+      ],
+      "relevant": [
+        "popular_items.txt"
+      ],
+      "scores": [
+        0.44,
+        0.368,
+        0.367
+      ]
+    }
+  ]
+}

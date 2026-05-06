@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-05-06T22:17:46.986440",
+  "order_id": "ORD-20260506221746-58ED37",
+  "total_turns": 12,
+  "order": {
+    "item": "T-Rex",
+    "colors": "T-Rex",
+    "size": "T-Rex",
+    "extras": "T-Rex",
+    "quantity": "T-Rex",
+    "price": "Rs. 1,500 to Rs. 2,500",
+    "name": "Bilal Ahmed",
+    "address": "House 1, Model Town Lahore",
+    "payment": "Cash on Delivery",
+    "delivery": "5-7 business days"
+  }
+}

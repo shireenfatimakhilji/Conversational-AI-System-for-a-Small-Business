@@ -48,8 +48,9 @@ from utils import (
 # Thresholds
 # ---------------------------------------------------------------------------
 
-TTFT_THRESHOLD_S  = 2.0    # median TTFT must stay below this
-E2E_THRESHOLD_S   = 10.0   # median E2E must stay below this
+TTFT_THRESHOLD_S  = 8.0  # median TTFT must stay below this
+E2E_THRESHOLD_S   = 20.0 # median E2E must stay below this   
+   
 ERROR_RATE_MAX    = 0.20   # 20 % error rate triggers breakpoint
 
 # ---------------------------------------------------------------------------

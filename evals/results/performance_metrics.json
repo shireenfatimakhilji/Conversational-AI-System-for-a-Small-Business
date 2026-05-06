@@ -1,0 +1,119 @@
+{
+  "latency": {
+    "simple": {
+      "scenario": "simple",
+      "trials": 10,
+      "failed": 0,
+      "ttft": {
+        "mean": 4.3563,
+        "median": 4.2517,
+        "p90": 4.5438,
+        "p99": 4.8811
+      },
+      "inter_token_latency": {
+        "mean": 0.0295,
+        "median": 0.0294,
+        "p90": 0.03,
+        "p99": 0.0312
+      },
+      "end_to_end": {
+        "mean": 5.0318,
+        "median": 4.9592,
+        "p90": 5.5923,
+        "p99": 6.2274
+      }
+    },
+    "rag": {
+      "scenario": "rag",
+      "trials": 10,
+      "failed": 0,
+      "ttft": {
+        "mean": 5.525,
+        "median": 5.5396,
+        "p90": 5.6647,
+        "p99": 5.7387
+      },
+      "inter_token_latency": {
+        "mean": 0.0305,
+        "median": 0.0301,
+        "p90": 0.0316,
+        "p99": 0.0326
+      },
+      "end_to_end": {
+        "mean": 12.8539,
+        "median": 12.8831,
+        "p90": 14.8056,
+        "p99": 17.1559
+      }
+    },
+    "tool": {
+      "scenario": "tool",
+      "trials": 10,
+      "failed": 0,
+      "ttft": {
+        "mean": 0.0031,
+        "median": 0.0021,
+        "p90": 0.004,
+        "p99": 0.01
+      },
+      "inter_token_latency": {
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0
+      },
+      "end_to_end": {
+        "mean": 0.0031,
+        "median": 0.0022,
+        "p90": 0.0041,
+        "p99": 0.01
+      }
+    },
+    "mixed": {
+      "scenario": "mixed",
+      "trials": 10,
+      "failed": 0,
+      "ttft": {
+        "mean": 4.4805,
+        "median": 4.494,
+        "p90": 4.7345,
+        "p99": 4.7827
+      },
+      "inter_token_latency": {
+        "mean": 0.0303,
+        "median": 0.0303,
+        "p90": 0.0304,
+        "p99": 0.0309
+      },
+      "end_to_end": {
+        "mean": 8.0686,
+        "median": 7.3578,
+        "p90": 9.6376,
+        "p99": 14.4315
+      }
+    }
+  },
+  "throughput": {
+    "levels": [
+      {
+        "concurrency": 1,
+        "total_turns": 4,
+        "failed_turns": 3,
+        "error_rate": 0.75,
+        "ttft_median": 3.449,
+        "ttft_p90": 3.449,
+        "e2e_median": 3.7769,
+        "e2e_p90": 3.7769,
+        "wall_time_s": 6.802,
+        "turns_per_sec": 0.588,
+        "threshold_breach": true
+      }
+    ],
+    "max_concurrency": 0,
+    "breakpoint": 1,
+    "peak_turns_per_sec": 0.0,
+    "total_turns": 4,
+    "total_failed": 3
+  },
+  "threshold_violations": []
+}

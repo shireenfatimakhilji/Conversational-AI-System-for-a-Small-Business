@@ -106,15 +106,15 @@ def run_faithfulness_eval():
     print(f"Avg faithfulness:  {avg_score:.2f}/5")
     print("=" * 60)
 
-    os.makedirs("evals/results", exist_ok=True)
-    with open("evals/results/faithfulness_metrics.json", "w") as f:
+    os.makedirs("results", exist_ok=True)
+    with open("results/faithfulness_metrics.json", "w") as f:
         json.dump({
             "avg_faithfulness_score": avg_score,
             "max_score": 5,
             "queries_evaluated": len(results),
             "per_query": results
         }, f, indent=2)
-    print("Results saved to evals/results/faithfulness_metrics.json")
+    print("Results saved to results/faithfulness_metrics.json")
 
 if __name__ == "__main__":
     run_faithfulness_eval()
