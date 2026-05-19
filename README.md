@@ -1,5 +1,7 @@
 # Crochetzies Chatbot - Virtual Order Assistant
 
+## Link to the demo video: https://www.youtube.com/watch?v=-NA26qntuIQ
+
 ## Business Use Case
 
 Crochetzies is a conversational AI assistant designed for a small custom crochet business. The chatbot helps customers place personalized orders through natural conversation instead of traditional forms.
@@ -187,5 +189,3 @@ The frontend proxies `/api/*` and `/ws/*` to the backend through `frontend/next.
 - Weather lookups fall back to demo data when no API key is configured.
 
 **Tech Stack**: Python, FastAPI, Ollama, Whisper, Next.js, React
-
-## Link to the demo video: https://www.youtube.com/watch?v=-NA26qntuIQ
