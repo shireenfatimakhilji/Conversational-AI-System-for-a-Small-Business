@@ -188,4 +188,4 @@ The frontend proxies `/api/*` and `/ws/*` to the backend through `frontend/next.
 
 **Tech Stack**: Python, FastAPI, Ollama, Whisper, Next.js, React
 
-## Link to the demo video: https://youtu.be/5npbhZ2dv5c
+## Link to the demo video: https://www.youtube.com/watch?v=-NA26qntuIQ
